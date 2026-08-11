@@ -70,10 +70,11 @@ async def start_handler(message: Message):
     if len(parts) > 1 and parts[1].strip().isdigit():
         referrer_id = parts[1].strip()
 
+    name = message.from_user.first_name if message.from_user.first_name else "User"
     text = (
-        f"⚡️ Welcome to Star Blitz, {message.from_user.first_name if message.from_user.first_name else 'User'}! 🌟\n\n"
-        "💰 Earn real USDT by watching ads, completing tasks, playing mini-games, and inviting friends.\n\n"
-        "👇 Tap the button below to launch the app and start earning!"
+        f"⚡ Welcome to Star Blitz ⭐, {name}!\n\n"
+        "🎮 Complete daily quests, spin the wheel, scratch for diamonds, and level up your streak.\n"
+        "🚀 Tap below to jump into your quest board."
     )
     await message.answer(text, reply_markup=_webapp_keyboard(referrer_id))
 
