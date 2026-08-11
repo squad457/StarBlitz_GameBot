@@ -69,7 +69,7 @@ function renderHome(state) {
   const achievements = [
     { done: user.streak_count >= 3, icon: "🔥", label: "3-day streak", detail: `${Math.min(user.streak_count, 3)}/3 days` },
     { done: user.streak_count >= 7, icon: "🏅", label: "7-day streak", detail: `${Math.min(user.streak_count, 7)}/7 days` },
-    { done: tasksCompleted >= 1, icon: "✓", label: "First quest complete", detail: tasksCompleted >= 1 ? "Unlocked" : "Complete a quest" },
+    { done: tasksCompleted >= 1, icon: "✓", label: "First task complete", detail: tasksCompleted >= 1 ? "Unlocked" : "Complete a task" },
     { done: level >= 5, icon: "⭐", label: "Reach Level 5", detail: `Level ${Math.min(level, 5)}/5` },
   ];
   const achievementRows = achievements.map(a => `
@@ -178,8 +178,8 @@ function renderEarn(state) {
 
   return `
     <div class="mt-1">${adSection}</div>
-    <h3 class="font-display font-semibold mt-5 mb-2.5 text-sm uppercase tracking-[0.1em] text-gray-500">Quests</h3>
-    ${tasks && tasks.length === 0 ? emptyState("No quests right now — check back soon.") : taskList}
+    <h3 class="font-display font-semibold mt-5 mb-2.5 text-sm uppercase tracking-[0.1em] text-gray-500">Tasks</h3>
+    ${tasks && tasks.length === 0 ? emptyState("No tasks right now — check back soon.") : taskList}
   `;
 }
 
