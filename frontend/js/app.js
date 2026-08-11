@@ -277,13 +277,18 @@ document.addEventListener("click", async (e) => {
   if (typeof PREVIEW_MODE !== "undefined" && PREVIEW_MODE) {
     document.body.innerHTML = `
       <div style="background:#0D0B1A; color:#fff; font-family:'Inter', sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; padding:24px;">
-        <div style="font-size:48px; margin-bottom:16px;">🤖</div>
-        <h2 style="font-size:22px; font-weight:700; margin-bottom:8px; font-family:'Sora', sans-serif;">Telegram Access Required</h2>
-        <p style="color:#9B95B8; margin-bottom:24px; font-size:14px; max-width:320px; line-height:1.5;">This Mini App can only be accessed directly from Telegram. Please open our bot to launch the app.</p>
-        <a href="https://t.me/StarBlitzGameBot" style="background:linear-gradient(135deg, #8B5CF6, #EC4899); color:#fff; padding:14px 28px; border-radius:14px; text-decoration:none; font-weight:600; font-size:15px; box-shadow:0 10px 25px rgba(139,92,246,0.4);">Open Bot in Telegram</a>
+        <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(236,72,153,0.2)); display:flex; align-items:center; justify-content:center; margin-bottom:20px; border:1px solid rgba(139,92,246,0.3);">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2 2 9.5l7.5 3.5L13 21.5 21.5 2z"/></svg>
+        </div>
+        <h2 style="font-size:22px; font-weight:700; margin-bottom:10px; font-family:'Sora', sans-serif; letter-title:-0.5px;">Telegram Required</h2>
+        <p style="color:#9B95B8; margin-bottom:8px; font-size:14px; max-width:360px; line-height:1.6;">ይህ ሚኒ አፕ (Mini App) በቴሌግራም መተግበሪያ ውስጥ ብቻ የሚሰራ ነው። እባክዎ ከታች ያለውን አዝራር በመጫን ወደ ቦታችን በመሄድ አፑን ይክፈቱ።</p>
+        <p style="color:#6E6893; margin-bottom:28px; font-size:13px; max-width:360px; line-height:1.5;">This application is designed exclusively for Telegram. Please open our official bot to launch the app safely.</p>
+        <a href="https://t.me/StarBlitzGameBot" style="background:linear-gradient(135deg, #8B5CF6, #EC4899); color:#fff; padding:14px 32px; border-radius:14px; text-decoration:none; font-weight:600; font-size:15px; box-shadow:0 10px 25px rgba(139,92,246,0.4); display:inline-flex; align-items:center; gap:8px;">
+          <span>Open Bot in Telegram</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     `;
-    window.location.href = "https://t.me/StarBlitzGameBot";
     return;
   } else {
     tg?.ready();
