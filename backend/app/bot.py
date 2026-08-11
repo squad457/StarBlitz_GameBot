@@ -71,7 +71,7 @@ async def start_handler(message: Message):
         referrer_id = parts[1].strip()
 
     text = (
-        f"⚡️ Welcome to *Star Blitz*, {message.from_user.first_name if message.from_user.first_name else 'User'}! 🌟\n\n"
+        f"⚡️ Welcome to Star Blitz, {message.from_user.first_name if message.from_user.first_name else 'User'}! 🌟\n\n"
         "💰 Earn real USDT by watching ads, completing tasks, playing mini-games, and inviting friends.\n\n"
         "👇 Tap the button below to launch the app and start earning!"
     )
