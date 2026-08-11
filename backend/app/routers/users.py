@@ -70,7 +70,11 @@ async def _refresh_avatar_if_stale(user: dict) -> dict:
     if user.get("photo_synced_at") is None:
         # Nothing cached yet, so there's no fast fallback to show — worth
         # the wait just this once.
-        file_path = await fetch_avatar_file_path(user["telegram_id"])
+        try:
+            file_path = await fetch_avatar_file_path(user["telegram_id"])
+        except Exception as e:
+            logging.warning(f"Initial avatar fetch failed for {user['telegram_id']}: {e}")
+            file_path = None
         now = datetime.now(timezone.utc).isoformat()
         await _write_avatar_refresh(user["telegram_id"], file_path)
         return {**user, "photo_file_path": file_path, "photo_synced_at": now}
