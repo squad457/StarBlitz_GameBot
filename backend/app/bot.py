@@ -74,7 +74,7 @@ async def start_handler(message: Message):
     text = (
         f"⚡ Welcome to Star Blitz, {name}!\n\n"
         "🎮 Complete daily Task, spin the wheel, scratch for diamonds, and level up your streak\n\n"
-        "🚀 Tap below to launch the app and start earning!"
+        "🚀 Tap below to launch the app and start playing"
     )
     await message.answer(text, reply_markup=_webapp_keyboard(referrer_id))
 
