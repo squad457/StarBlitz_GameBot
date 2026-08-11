@@ -91,6 +91,10 @@ async function loadTabData(tab) {
       const [user, transactions] = await Promise.all([Api.syncUser(), Api.transactions()]);
       state.user = user;
       state.transactions = transactions.slice(0, 6);
+      if (user?.avatar_url) {
+        // Preload profile image during initial load so it appears instantly without any delay
+        await preloadImage(`${API_BASE}${user.avatar_url}`, 2500);
+      }
     } else if (tab === "earn") {
       const [adStatus, tasks] = await Promise.all([Api.adStatus(), Api.listTasks()]);
       state.adStatus = adStatus;
