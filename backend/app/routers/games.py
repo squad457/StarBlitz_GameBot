@@ -3,7 +3,7 @@ In-app games: Spin Wheel and Scratch Card.
 
 Design (per product requirement):
 - Spin Wheel: the admin sets a payout range (spin_min_reward, spin_max_reward —
-  e.g. 0.09-0.5 USDT). The wheel can only ever LAND on a segment whose number
+  e.g. 0.09-0.5 Birr). The wheel can only ever LAND on a segment whose number
   falls inside that range, and the reward paid is EXACTLY that segment's
   number — so what the user sees is always what they get, and money can never
   scatter outside the admin-approved range. Segments outside the range can

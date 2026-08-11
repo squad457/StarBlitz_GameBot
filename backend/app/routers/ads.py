@@ -90,7 +90,7 @@ async def _credit_ad_reward(db, telegram_id: int, reward_event: str) -> tuple[fl
         if (now - last_time).total_seconds() < cfg["ad_cooldown_seconds"]:
             raise HTTPException(status_code=429, detail="Please wait before watching another ad")
 
-    reward = cfg["ad_reward_usdt"]
+    reward = cfg["ad_reward_birr"]
 
     try:
         await db.execute(
@@ -229,6 +229,6 @@ async def ad_status(user: dict = Depends(get_current_user)):
         "adsgram_debug": cfg["adsgram_debug"],
         "watched_today": watched_today,
         "daily_limit": cfg["ad_daily_limit"],
-        "reward_per_ad": cfg["ad_reward_usdt"],
+        "reward_per_ad": cfg["ad_reward_birr"],
         "cooldown_seconds": cfg["ad_cooldown_seconds"],
     }

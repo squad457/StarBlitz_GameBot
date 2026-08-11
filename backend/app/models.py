@@ -21,9 +21,9 @@ class GamePlayPayload(BaseModel):
 
 class WithdrawalRequest(BaseModel):
     amount: float
-    method: str = Field(default="binance_pay", pattern="^(binance_pay|usdt_address)$")
+    method: str = Field(default="telebirr", pattern="^(telebirr|cbe_birr)$")
     payout_id: str = Field(..., min_length=3, max_length=128)
-    network: str | None = Field(default=None, description="Required when method = usdt_address, e.g. TRC20")
+    network: str | None = Field(default=None, description="Required when method = cbe_birr, e.g. TRC20")
 
     @field_validator("payout_id")
     @classmethod
@@ -48,13 +48,13 @@ class SettingsUpdate(BaseModel):
     """All fields optional — the admin dashboard only sends the keys it changed."""
     ads_enabled: bool | None = None
     adsgram_block_id: str | None = None
-    ad_reward_usdt: float | None = None
+    ad_reward_birr: float | None = None
     ad_daily_limit: int | None = None
     ad_cooldown_seconds: int | None = None
     referral_commission_percent: float | None = None
     referral_signup_bonus: float | None = None
     referral_fixed_reward: float | None = None
-    min_withdrawal_usdt: float | None = None
+    min_withdrawal_birr: float | None = None
     withdrawal_tiers: list[float] | None = None
     streak_rewards: list[float] | None = None
     daily_checkin_enabled: bool | None = None

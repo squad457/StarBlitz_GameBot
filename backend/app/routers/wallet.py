@@ -12,21 +12,21 @@ async def request_withdrawal(payload: WithdrawalRequest, user: dict = Depends(ge
     async with get_db() as db:
         cfg = await get_settings(db)
 
-        if payload.amount < cfg["min_withdrawal_usdt"]:
-            raise HTTPException(status_code=400, detail=f"Minimum withdrawal is ${cfg['min_withdrawal_usdt']}")
+        if payload.amount < cfg["min_withdrawal_birr"]:
+            raise HTTPException(status_code=400, detail=f"Minimum withdrawal is ${cfg['min_withdrawal_birr']}")
         if payload.amount not in cfg["withdrawal_tiers"]:
             raise HTTPException(status_code=400, detail=f"Amount must be one of {cfg['withdrawal_tiers']}")
         if payload.amount > user["balance"]:
             raise HTTPException(status_code=400, detail="Insufficient balance")
-        if payload.method == "usdt_address" and not payload.network:
+        if payload.method == "cbe_birr" and not payload.network:
             raise HTTPException(status_code=400, detail="Network is required for wallet address withdrawals")
 
         # Reserve the funds immediately so the same balance can't be withdrawn twice
         # while this request is pending admin review.
         new_balance = user["balance"] - payload.amount
         await db.execute(
-            "UPDATE users SET balance = ?, binance_pay_id = ? WHERE telegram_id = ?",
-            (new_balance, payload.payout_id if payload.method == "binance_pay" else user["binance_pay_id"],
+            "UPDATE users SET balance = ?, telebirr_number = ? WHERE telegram_id = ?",
+            (new_balance, payload.payout_id if payload.method == "telebirr" else user["telebirr_number"],
              user["telegram_id"]),
         )
         await db.execute(
@@ -62,7 +62,7 @@ async def wallet_config():
     async with get_db() as db:
         cfg = await get_settings(db)
     return {
-        "min_withdrawal": cfg["min_withdrawal_usdt"],
+        "min_withdrawal": cfg["min_withdrawal_birr"],
         "tiers": cfg["withdrawal_tiers"],
         "support_username": cfg["support_username"],
     }

@@ -144,7 +144,7 @@ document.addEventListener("click", async (e) => {
   if (e.target.closest("#btn-checkin")) {
     try {
       const res = await Api.checkin();
-      showToast(`+${res.reward.toFixed(4)} USDT claimed!`);
+      showToast(`+${res.reward.toFixed(4)} Birr claimed!`);
       state.user = await Api.syncUser();
       renderActiveTab();
     } catch (err) { showToast(err.message, "error"); }
@@ -156,7 +156,7 @@ document.addEventListener("click", async (e) => {
     try {
       const rewardEvent = await showRewardedAd();
       const res = await Api.claimAdReward(rewardEvent);
-      showToast(`+${res.reward.toFixed(4)} USDT earned!`);
+      showToast(`+${res.reward.toFixed(4)} Birr earned!`);
       state.adStatus = await Api.adStatus();
       state.user = await Api.syncUser();
       renderActiveTab();
@@ -191,7 +191,7 @@ document.addEventListener("click", async (e) => {
     if (url) tg?.openLink ? tg.openLink(url) : window.open(url, "_blank");
     try {
       const res = await Api.completeTask(taskId);
-      showToast(`+${res.reward.toFixed(4)} USDT earned!`);
+      showToast(`+${res.reward.toFixed(4)} Birr earned!`);
       state.tasks = await Api.listTasks();
       renderActiveTab();
     } catch (err) { showToast(err.message, "error"); }
@@ -210,11 +210,11 @@ document.addEventListener("click", async (e) => {
     const label = document.getElementById("payout-label");
     const input = document.getElementById("input-payout-id");
     if (label && input) {
-      if (method === 'binance_pay') {
-        label.textContent = "Enter Binance Pay ID";
+      if (method === 'telebirr') {
+        label.textContent = "Enter Telebirr Phone Number";
         input.placeholder = "e.g. 123456789";
       } else {
-        label.textContent = "Enter USDT (BEP20) Wallet Address";
+        label.textContent = "Enter CBE Birr Account Number";
         input.placeholder = "e.g. 0x...";
       }
     }
@@ -240,12 +240,16 @@ document.addEventListener("click", async (e) => {
     const amount = parseFloat(amtInput?.value || selectedTier?.dataset?.amount);
     const payoutId = document.getElementById("input-payout-id").value.trim();
     if (!amount || isNaN(amount) || amount <= 0) { showToast("Enter or select a valid withdrawal amount", "error"); return; }
-    if (!payoutId) { showToast("Enter your Binance Pay ID or USDT (BEP20) address", "error"); return; }
+    if (!payoutId) { showToast("Enter your Telebirr phone number or CBE account", "error"); return; }
+    if (state.selectedMethod === "telebirr" && !/^(09|07)\d{8}$/.test(payoutId)) {
+      showToast("Enter a valid Ethiopian phone number starting with 09 or 07, 10 digits total", "error");
+      return;
+    }
 
     try {
       await Api.withdraw({
         amount: amount,
-        method: state.selectedMethod || "binance_pay",
+        method: state.selectedMethod || "telebirr",
         payout_id: payoutId,
       });
       showToast("Withdrawal submitted!");
@@ -273,7 +277,7 @@ document.addEventListener("click", async (e) => {
     return;
   }
   if (e.target.closest("#btn-share-link")) {
-    const url = `https://t.me/share/url?url=${encodeURIComponent(state.referral.referral_link)}&text=${encodeURIComponent("Join me and start earning USDT! 💰")}`;
+    const url = `https://t.me/share/url?url=${encodeURIComponent(state.referral.referral_link)}&text=${encodeURIComponent("Join me and start earning Ethiopian Birr! 💰")}`;
     tg?.openTelegramLink ? tg.openTelegramLink(url) : window.open(url, "_blank");
     return;
   }

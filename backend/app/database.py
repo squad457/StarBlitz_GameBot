@@ -20,12 +20,12 @@ CREATE TABLE IF NOT EXISTS users (
     telegram_id       INTEGER PRIMARY KEY,
     username          TEXT,
     first_name        TEXT,
-    balance           REAL NOT NULL DEFAULT 0,       -- current withdrawable USDT balance
+    balance           REAL NOT NULL DEFAULT 0,       -- current withdrawable Birr balance
     total_earned      REAL NOT NULL DEFAULT 0,       -- lifetime earnings, never decreases
     streak_count      INTEGER NOT NULL DEFAULT 0,
     last_checkin_date TEXT,                          -- 'YYYY-MM-DD' in UTC
     referred_by       INTEGER,                       -- telegram_id of referrer, NULL if none
-    binance_pay_id    TEXT,                           -- last-used payout ID, prefilled on wallet page
+    telebirr_number    TEXT,                           -- last-used payout ID, prefilled on wallet page
     photo_file_path   TEXT,                            -- cached Telegram file_path for the profile photo (never a full URL — see bot.fetch_avatar_file_path)
     photo_synced_at   TEXT,                            -- when photo_file_path was last refreshed, for cache TTL
     is_banned         INTEGER NOT NULL DEFAULT 0,
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS withdrawals (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
     telegram_id    INTEGER NOT NULL,
     amount         REAL NOT NULL,
-    method         TEXT NOT NULL DEFAULT 'binance_pay', -- 'binance_pay' | 'usdt_address'
-    payout_id      TEXT NOT NULL,      -- Binance Pay ID or wallet address
-    network        TEXT,               -- e.g. 'TRC20', 'BEP20' — only used when method = usdt_address
+    method         TEXT NOT NULL DEFAULT 'telebirr', -- 'telebirr' | 'cbe_birr'
+    payout_id      TEXT NOT NULL,      -- Telebirr number or wallet address
+    network        TEXT,               -- e.g. 'TRC20', 'CBE' — only used when method = cbe_birr
     status         TEXT NOT NULL DEFAULT 'pending',   -- 'pending' | 'approved' | 'rejected'
     admin_note     TEXT,
     requested_at   TEXT NOT NULL DEFAULT (datetime('now')),
@@ -140,13 +140,13 @@ CREATE INDEX IF NOT EXISTS idx_game_events_user_date ON game_events(telegram_id,
 DEFAULT_SETTINGS = {
     "ads_enabled": "1",
     "adsgram_block_id": settings.ADSGRAM_BLOCK_ID,
-    "ad_reward_usdt": str(settings.AD_REWARD_USDT),
+    "ad_reward_birr": str(settings.AD_REWARD_BIRR),
     "ad_daily_limit": str(settings.AD_DAILY_LIMIT),
     "ad_cooldown_seconds": str(settings.AD_COOLDOWN_SECONDS),
     "referral_commission_percent": str(settings.REFERRAL_COMMISSION_PERCENT),
     "referral_signup_bonus": str(settings.REFERRAL_SIGNUP_BONUS),
     "referral_fixed_reward": str(settings.REFERRAL_SIGNUP_BONUS),
-    "min_withdrawal_usdt": str(settings.MIN_WITHDRAWAL_USDT),
+    "min_withdrawal_birr": str(settings.MIN_WITHDRAWAL_BIRR),
     "withdrawal_tiers": ",".join(str(t) for t in settings.WITHDRAWAL_TIERS),
     "streak_rewards": ",".join(str(r) for r in settings.STREAK_REWARDS),
     "daily_checkin_enabled": "1",
@@ -232,13 +232,13 @@ async def get_settings(db) -> dict:
     return {
         "ads_enabled": _b("ads_enabled", True),
         "adsgram_block_id": raw.get("adsgram_block_id", ""),
-        "ad_reward_usdt": _f("ad_reward_usdt", settings.AD_REWARD_USDT),
+        "ad_reward_birr": _f("ad_reward_birr", settings.AD_REWARD_BIRR),
         "ad_daily_limit": _i("ad_daily_limit", settings.AD_DAILY_LIMIT),
         "ad_cooldown_seconds": _i("ad_cooldown_seconds", settings.AD_COOLDOWN_SECONDS),
         "referral_commission_percent": _f("referral_commission_percent", settings.REFERRAL_COMMISSION_PERCENT),
         "referral_signup_bonus": _f("referral_signup_bonus", settings.REFERRAL_SIGNUP_BONUS),
         "referral_fixed_reward": _f("referral_fixed_reward", settings.REFERRAL_SIGNUP_BONUS),
-        "min_withdrawal_usdt": _f("min_withdrawal_usdt", settings.MIN_WITHDRAWAL_USDT),
+        "min_withdrawal_birr": _f("min_withdrawal_birr", settings.MIN_WITHDRAWAL_BIRR),
         "withdrawal_tiers": _list_f("withdrawal_tiers", settings.WITHDRAWAL_TIERS),
         "streak_rewards": _list_f("streak_rewards", settings.STREAK_REWARDS),
         "daily_checkin_enabled": _b("daily_checkin_enabled", True),

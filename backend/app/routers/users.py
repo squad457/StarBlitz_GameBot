@@ -100,7 +100,7 @@ async def sync_user(user: dict = Depends(get_current_user)):
         "last_checkin_date": user["last_checkin_date"],
         "checked_in_today": user["last_checkin_date"] == _today_utc(),
         "daily_checkin_enabled": cfg["daily_checkin_enabled"],
-        "binance_pay_id": user["binance_pay_id"],
+        "telebirr_number": user["telebirr_number"],
         "referral_link": f"https://t.me/{env_settings.BOT_USERNAME}/{env_settings.MINI_APP_SHORT_NAME}?startapp={user['telegram_id']}",
         "support_username": cfg["support_username"],
         # Relative path — the frontend prepends API_BASE. Never a direct Telegram

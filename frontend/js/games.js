@@ -5,10 +5,10 @@
  * animation built around the server's response, never a source of truth.
  */
 // Curated, professional palette — deep violet/indigo family with a single warm
-// gold accent segment, echoing recognizable exchange-app wheels (Binance etc.)
+// gold accent segment, echoing recognizable exchange-app wheels (Ethiopian etc.)
 // instead of a clashing full rainbow.
 const WHEEL_COLORS = ["#7C3AED", "#4C1D95", "#8B5CF6", "#5B21B6", "#6D28D9", "#4338CA", "#9333EA", "#3730A3"];
-const WHEEL_ACCENT_COLOR = "#F0B90B"; // single gold "jackpot" slice for visual anchor, Binance-style
+const WHEEL_ACCENT_COLOR = "#F0B90B"; // single gold "jackpot" slice for visual anchor, Ethiopian-style
 
 let wheelRotation = 0;
 let wheelSpinning = false;
@@ -61,7 +61,7 @@ function renderSpinWheel(spinStatus) {
   return `
     <div class="card-feature p-5 pt-6 mt-2 text-center">
       <span class="pill-chip mb-2.5">🎡 Spin Wheel</span>
-      <p class="text-xs text-gray-400 mb-5 px-2">Every spin wins a random USDT reward — good luck!</p>
+      <p class="text-xs text-gray-400 mb-5 px-2">Every spin wins a random Birr reward — good luck!</p>
       <div class="wheel-wrap">
         <div class="wheel-pointer"></div>
         <div id="spin-wheel" class="wheel" style="background: conic-gradient(${gradientStops}); transform: rotate(${wheelRotation}deg);">
@@ -117,7 +117,7 @@ async function handleSpinClick() {
 
     setTimeout(async () => {
       wheelSpinning = false;
-      showToast(`🎉 You won ${res.reward.toFixed(4)} USDT!`);
+      showToast(`🎉 You won ${res.reward.toFixed(4)} Birr!`);
       state.user = await Api.syncUser();
       state.spinStatus = await Api.spinStatus();
       renderActiveTab();
@@ -247,7 +247,7 @@ async function handleScratchCellTap(index) {
       const { reward, hits } = scratchPending.resolved;
       scratchPending = null;
       if (reward > 0) {
-        showToast(`🎉 ${hits} diamond${hits === 1 ? "" : "s"} — you won ${reward.toFixed(4)} USDT!`);
+        showToast(`🎉 ${hits} diamond${hits === 1 ? "" : "s"} — you won ${reward.toFixed(4)} Birr!`);
       } else {
         showToast("No diamonds this round — try again!", "error");
       }

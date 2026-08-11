@@ -49,18 +49,18 @@ class Settings:
     ADSGRAM_DEBUG: bool = os.getenv("ADSGRAM_DEBUG", "0") == "1"
 
     # --- Economy ---
-    AD_REWARD_USDT: float = float(os.getenv("AD_REWARD_USDT", "0.003"))
+    AD_REWARD_BIRR: float = float(os.getenv("AD_REWARD_BIRR", "5.00"))
     AD_DAILY_LIMIT: int = int(os.getenv("AD_DAILY_LIMIT", "50"))
     AD_COOLDOWN_SECONDS: int = int(os.getenv("AD_COOLDOWN_SECONDS", "15"))
 
-    REFERRAL_COMMISSION_PERCENT: float = float(os.getenv("REFERRAL_COMMISSION_PERCENT", "10"))
-    REFERRAL_SIGNUP_BONUS: float = float(os.getenv("REFERRAL_SIGNUP_BONUS", "0.01"))
+    REFERRAL_COMMISSION_PERCENT: float = float(os.getenv("REFERRAL_COMMISSION_PERCENT", "380"))
+    REFERRAL_SIGNUP_BONUS: float = float(os.getenv("REFERRAL_SIGNUP_BONUS", "10.00"))
 
-    MIN_WITHDRAWAL_USDT: float = float(os.getenv("MIN_WITHDRAWAL_USDT", "10"))
-    WITHDRAWAL_TIERS: list[float] = [10, 50, 100]
+    MIN_WITHDRAWAL_BIRR: float = float(os.getenv("MIN_WITHDRAWAL_BIRR", "380.0"))
+    WITHDRAWAL_TIERS: list[float] = [380, 500, 1000]
 
     # Daily check-in streak rewards, index 0 = day 1 ... index 6 = day 7 (then it loops)
-    STREAK_REWARDS: list[float] = [0.002, 0.003, 0.004, 0.005, 0.006, 0.008, 0.02]
+    STREAK_REWARDS: list[float] = [2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 15.0]
 
     # --- Spin Wheel game ---
     SPIN_ENABLED: bool = os.getenv("SPIN_ENABLED", "1") == "1"
@@ -70,9 +70,9 @@ class Settings:
     # the wheel (so the admin can add "jackpot"/"try again" style decorative
     # numbers) but are never selected as the actual outcome, so real money can
     # never scatter outside the approved range.
-    SPIN_MIN_REWARD: float = float(os.getenv("SPIN_MIN_REWARD", "0.09"))
-    SPIN_MAX_REWARD: float = float(os.getenv("SPIN_MAX_REWARD", "0.5"))
-    SPIN_SEGMENTS: list[float] = [0.09, 0.5, 0.15, 0.3, 0.1, 0.5, 0.2, 0.4]
+    SPIN_MIN_REWARD: float = float(os.getenv("SPIN_MIN_REWARD", "2.0"))
+    SPIN_MAX_REWARD: float = float(os.getenv("SPIN_MAX_REWARD", "15.0"))
+    SPIN_SEGMENTS: list[float] = [2.0, 15.0, 5.0, 10.0, 3.0, 12.0, 4.0, 8.0]
     SPIN_DAILY_FREE_SPINS: int = int(os.getenv("SPIN_DAILY_FREE_SPINS", "1"))
     SPIN_MAX_DAILY_SPINS: int = int(os.getenv("SPIN_MAX_DAILY_SPINS", "8"))  # 0 = unlimited (still gated by ads)
     SPIN_REQUIRE_AD_AFTER_FREE: bool = os.getenv("SPIN_REQUIRE_AD_AFTER_FREE", "1") == "1"
@@ -80,8 +80,8 @@ class Settings:
 
     # --- Scratch Card game ---
     SCRATCH_ENABLED: bool = os.getenv("SCRATCH_ENABLED", "1") == "1"
-    SCRATCH_MIN_REWARD: float = float(os.getenv("SCRATCH_MIN_REWARD", "0.002"))
-    SCRATCH_MAX_REWARD: float = float(os.getenv("SCRATCH_MAX_REWARD", "0.008"))
+    SCRATCH_MIN_REWARD: float = float(os.getenv("SCRATCH_MIN_REWARD", "1.0"))
+    SCRATCH_MAX_REWARD: float = float(os.getenv("SCRATCH_MAX_REWARD", "5.0"))
     SCRATCH_DAILY_FREE: int = int(os.getenv("SCRATCH_DAILY_FREE", "1"))
     SCRATCH_MAX_DAILY: int = int(os.getenv("SCRATCH_MAX_DAILY", "5"))
     SCRATCH_REQUIRE_AD_AFTER_FREE: bool = os.getenv("SCRATCH_REQUIRE_AD_AFTER_FREE", "1") == "1"

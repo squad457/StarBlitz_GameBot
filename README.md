@@ -1,6 +1,6 @@
-# USDT Rewards — Telegram Mini App
+# Birr Rewards — Telegram Mini App
 
-Watch ads, complete tasks, refer friends → earn real USDT, withdraw via Binance Pay or a USDT wallet address.
+Watch ads, complete tasks, refer friends → earn real Birr, withdraw via Telebirr or a Birr wallet address.
 
 ## Stack
 
@@ -15,7 +15,7 @@ Watch ads, complete tasks, refer friends → earn real USDT, withdraw via Binanc
 ## Project structure
 
 ```
-usdt-tma/
+birr-tma/
 ├── backend/
 │   ├── app/
 │   │   ├── main.py          # FastAPI entrypoint, CORS, router registration
@@ -52,7 +52,7 @@ usdt-tma/
 
 ## Database schema
 
-- **users** — telegram_id (PK), balance, total_earned, streak_count, last_checkin_date, referred_by, binance_pay_id, is_banned
+- **users** — telegram_id (PK), balance, total_earned, streak_count, last_checkin_date, referred_by, telebirr_number, is_banned
 - **transactions** — immutable ledger; every balance change (ad_reward, task_reward, referral_commission, referral_bonus, checkin, withdrawal, admin_adjust) writes one row here, so the balance is always auditable/reconstructable
 - **tasks** — admin-configurable custom tasks (title, url, reward, task_type)
 - **user_tasks** — completion record per user/task (UNIQUE constraint prevents double-claiming)
@@ -140,4 +140,4 @@ Deploy the `frontend/` folder as a static site on Vercel (no build step needed).
 
 ## Tuning the economy
 
-All reward amounts, limits, and thresholds live in `backend/app/config.py` (env-overridable): `AD_REWARD_USDT`, `AD_DAILY_LIMIT`, `AD_COOLDOWN_SECONDS`, `REFERRAL_COMMISSION_PERCENT`, `REFERRAL_SIGNUP_BONUS`, `STREAK_REWARDS` (7-day escalating array), `MIN_WITHDRAWAL_USDT`, `WITHDRAWAL_TIERS`.
+All reward amounts, limits, and thresholds live in `backend/app/config.py` (env-overridable): `AD_REWARD_Birr`, `AD_DAILY_LIMIT`, `AD_COOLDOWN_SECONDS`, `REFERRAL_COMMISSION_PERCENT`, `REFERRAL_SIGNUP_BONUS`, `STREAK_REWARDS` (7-day escalating array), `MIN_WITHDRAWAL_Birr`, `WITHDRAWAL_TIERS`.

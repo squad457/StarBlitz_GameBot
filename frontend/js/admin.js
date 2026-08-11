@@ -201,7 +201,7 @@ async function renderTasks(body) {
       <div class="admin-field"><label>Title</label><input id="task-title" type="text" placeholder="Join our channel" /></div>
       <div class="admin-field"><label>Description</label><input id="task-desc" type="text" placeholder="Short description" /></div>
       <div class="admin-field"><label>URL</label><input id="task-url" type="text" placeholder="https://t.me/..." /></div>
-      <div class="admin-field"><label>Reward (USDT)</label><input id="task-reward" type="number" step="0.001" value="0.01" /></div>
+      <div class="admin-field"><label>Reward (Birr)</label><input id="task-reward" type="number" step="0.01" value="0.01" /></div>
       <div class="admin-field">
         <label>Type</label>
         <select id="task-type">
@@ -222,7 +222,7 @@ function renderTaskRows(items) {
     <div class="admin-row">
       <div class="main">
         <p class="title">${t.title} <span class="badge ${t.is_active ? "active" : "inactive"}">${t.is_active ? "active" : "off"}</span></p>
-        <p class="sub">+${t.reward.toFixed(3)} USDT · ${t.task_type}</p>
+        <p class="sub">+${t.reward.toFixed(3)} Birr · ${t.task_type}</p>
       </div>
       <div class="flex gap-1.5 shrink-0">
         <button class="btn-xs ghost" data-toggle-task="${t.id}">${t.is_active ? "Disable" : "Enable"}</button>
@@ -240,7 +240,7 @@ async function renderSettings(body) {
     <div class="glass-card p-5">
       ${toggleRow("set-ads-enabled", "Ads Enabled", "Turn rewarded ads on/off app-wide", s.ads_enabled)}
       <div class="admin-field"><label>Adsgram Block ID</label><input id="set-block-id" type="text" value="${s.adsgram_block_id}" /></div>
-      <div class="admin-field"><label>Reward per Ad (USDT)</label><input id="set-ad-reward" type="number" step="0.0001" value="${s.ad_reward_usdt}" /></div>
+      <div class="admin-field"><label>Reward per Ad (Birr)</label><input id="set-ad-reward" type="number" step="0.01" value="${s.ad_reward_birr}" /></div>
       <div class="admin-field"><label>Daily Limit per User</label><input id="set-ad-limit" type="number" value="${s.ad_daily_limit}" /></div>
       <div class="admin-field"><label>Cooldown Between Ads (seconds)</label><input id="set-ad-cooldown" type="number" value="${s.ad_cooldown_seconds}" /></div>
       ${toggleRow("set-adsgram-debug", "Debug / Test Mode", "⚠️ Leave OFF in production — Adsgram never counts debug views or fires your Reward URL for them. This is a common cause of an account showing 0 real conversions.", s.adsgram_debug)}
@@ -250,20 +250,20 @@ async function renderSettings(body) {
     <h3 class="admin-sect">Referrals</h3>
     <div class="glass-card p-5">
       <div class="admin-field"><label>Commission %</label><input id="set-ref-commission" type="number" step="0.1" value="${s.referral_commission_percent}" /></div>
-      <div class="admin-field"><label>Signup Bonus (USDT)</label><input id="set-ref-bonus" type="number" step="0.001" value="${s.referral_signup_bonus}" /></div>
-      <div class="admin-field"><label>Referral Fixed Reward (USDT)</label><input id="set-ref-fixed" type="number" step="0.001" value="${s.referral_fixed_reward}" /></div>
+      <div class="admin-field"><label>Signup Bonus (Birr)</label><input id="set-ref-bonus" type="number" step="0.01" value="${s.referral_signup_bonus}" /></div>
+      <div class="admin-field"><label>Referral Fixed Reward (Birr)</label><input id="set-ref-fixed" type="number" step="0.01" value="${s.referral_fixed_reward}" /></div>
     </div>
 
     <h3 class="admin-sect">Withdrawals</h3>
     <div class="glass-card p-5">
-      <div class="admin-field"><label>Minimum Withdrawal (USDT)</label><input id="set-min-wd" type="number" step="1" value="${s.min_withdrawal_usdt}" /></div>
+      <div class="admin-field"><label>Minimum Withdrawal (Birr)</label><input id="set-min-wd" type="number" step="1" value="${s.min_withdrawal_birr}" /></div>
       <div class="admin-field"><label>Amount Tiers (comma-separated)</label><input id="set-tiers" type="text" value="${s.withdrawal_tiers.join(",")}" /></div>
     </div>
 
     <h3 class="admin-sect">Daily Check-in</h3>
     <div class="glass-card p-5">
       ${toggleRow("set-checkin-enabled", "Daily Check-in Enabled", "", s.daily_checkin_enabled)}
-      <div class="admin-field"><label>7-Day Streak Rewards (comma-separated, USDT)</label><input id="set-streak" type="text" value="${s.streak_rewards.join(",")}" /></div>
+      <div class="admin-field"><label>7-Day Streak Rewards (comma-separated, Birr)</label><input id="set-streak" type="text" value="${s.streak_rewards.join(",")}" /></div>
     </div>
 
     <h3 class="admin-sect">General</h3>
@@ -296,14 +296,14 @@ async function saveAllSettings() {
   const payload = {
     ads_enabled: document.getElementById("set-ads-enabled").checked,
     adsgram_block_id: document.getElementById("set-block-id").value.trim(),
-    ad_reward_usdt: parseFloat(document.getElementById("set-ad-reward").value),
+    ad_reward_birr: parseFloat(document.getElementById("set-ad-reward").value),
     ad_daily_limit: parseInt(document.getElementById("set-ad-limit").value, 10),
     ad_cooldown_seconds: parseInt(document.getElementById("set-ad-cooldown").value, 10),
     adsgram_debug: document.getElementById("set-adsgram-debug").checked,
     referral_commission_percent: parseFloat(document.getElementById("set-ref-commission").value),
     referral_signup_bonus: parseFloat(document.getElementById("set-ref-bonus").value),
     referral_fixed_reward: parseFloat(document.getElementById("set-ref-fixed").value),
-    min_withdrawal_usdt: parseFloat(document.getElementById("set-min-wd").value),
+    min_withdrawal_birr: parseFloat(document.getElementById("set-min-wd").value),
     withdrawal_tiers: document.getElementById("set-tiers").value.split(",").map(s => parseFloat(s.trim())).filter(n => !isNaN(n)),
     daily_checkin_enabled: document.getElementById("set-checkin-enabled").checked,
     streak_rewards: document.getElementById("set-streak").value.split(",").map(s => parseFloat(s.trim())).filter(n => !isNaN(n)),
@@ -326,8 +326,8 @@ async function renderGamesAdmin(body) {
     <h3 class="admin-sect mt-2">🎡 Spin Wheel</h3>
     <div class="glass-card p-5">
       ${toggleRow("set-spin-enabled", "Spin Wheel Enabled", "", s.spin_enabled)}
-      <div class="admin-field"><label>Reward Range — Min (USDT)</label><input id="set-spin-min" type="number" step="0.0001" value="${s.spin_min_reward}" /></div>
-      <div class="admin-field"><label>Reward Range — Max (USDT)</label><input id="set-spin-max" type="number" step="0.0001" value="${s.spin_max_reward}" /></div>
+      <div class="admin-field"><label>Reward Range — Min (Birr)</label><input id="set-spin-min" type="number" step="0.01" value="${s.spin_min_reward}" /></div>
+      <div class="admin-field"><label>Reward Range — Max (Birr)</label><input id="set-spin-max" type="number" step="0.01" value="${s.spin_max_reward}" /></div>
       <p class="text-xs text-gray-500 -mt-1 mb-3">The wheel can only land on — and pay — a segment number inside this range. Segments outside the range still show on the wheel but can never actually be won.</p>
       <div class="admin-field"><label>Wheel Segment Numbers (comma-separated, 6-8+ slots)</label><input id="set-spin-segments" type="text" value="${s.spin_segments.join(",")}" /></div>
       <div class="admin-field"><label>Free Spins per Day</label><input id="set-spin-free" type="number" value="${s.spin_daily_free_spins}" /></div>
@@ -339,8 +339,8 @@ async function renderGamesAdmin(body) {
     <h3 class="admin-sect">🎫 Scratch Card</h3>
     <div class="glass-card p-5">
       ${toggleRow("set-scratch-enabled", "Scratch Card Enabled", "", s.scratch_enabled)}
-      <div class="admin-field"><label>Payout Range — Min (USDT)</label><input id="set-scratch-min" type="number" step="0.0001" value="${s.scratch_min_reward}" /></div>
-      <div class="admin-field"><label>Payout Range — Max (USDT)</label><input id="set-scratch-max" type="number" step="0.0001" value="${s.scratch_max_reward}" /></div>
+      <div class="admin-field"><label>Payout Range — Min (Birr)</label><input id="set-scratch-min" type="number" step="0.01" value="${s.scratch_min_reward}" /></div>
+      <div class="admin-field"><label>Payout Range — Max (Birr)</label><input id="set-scratch-max" type="number" step="0.01" value="${s.scratch_max_reward}" /></div>
       <div class="admin-field"><label>Free Plays per Day</label><input id="set-scratch-free" type="number" value="${s.scratch_daily_free}" /></div>
       <div class="admin-field"><label>Max Plays per Day (0 = unlimited via ads)</label><input id="set-scratch-max-daily" type="number" value="${s.scratch_max_daily}" /></div>
       <div class="admin-field"><label>Hidden Diamonds per Card (out of 9 — players always get exactly 3 taps; more diamonds = easier to hit some)</label><input id="set-scratch-winning-cells" type="number" min="1" max="9" value="${s.scratch_winning_cells}" /></div>

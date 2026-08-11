@@ -135,7 +135,7 @@ async def get_current_user(x_telegram_init_data: str = Header(None, alias="X-Tel
                                 referred_by,
                                 f"🎉 **New Referral Joined!** 👥\n\n"
                                 f"👤 User: {tg_user.get('first_name', 'A friend')} joined using your referral link.\n"
-                                f"💰 Reward earned: **+{fixed_reward} USDT**!\n\n"
+                                f"💰 Reward earned: **+{fixed_reward} Birr**!\n\n"
                                 f"Keep sharing your link to earn more!",
                                 parse_mode="Markdown"
                             )
@@ -165,11 +165,11 @@ async def get_current_user(x_telegram_init_data: str = Header(None, alias="X-Tel
                 if referred_by:
                     mini_app_url += f"?startapp={referred_by}"
                 kb = InlineKeyboardMarkup(inline_keyboard=[
-                    [InlineKeyboardButton(text="🚀 Open App & Earn USDT", url=mini_app_url)]
+                    [InlineKeyboardButton(text="🚀 Open App & Earn Birr", url=mini_app_url)]
                 ])
                 welcome_text = (
                     f"👋 **Welcome {tg_user.get('first_name', '')}!**\n\n"
-                    f"💰 Welcome to **USDT Rewards**!\n"
+                    f"💰 Welcome to **Birr Rewards**!\n"
                     f"You have successfully joined and activated your account.\n\n"
                     f"Tap the button below anytime to open the app and start earning!"
                 )
