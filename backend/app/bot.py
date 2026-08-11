@@ -58,7 +58,7 @@ def _webapp_keyboard(start_param: str | None = None) -> InlineKeyboardMarkup:
     if start_param:
         url += f"?startapp={start_param}"
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🚀 Open App & Start Earning", url=url)]
+        [InlineKeyboardButton(text="🚀 Launch Star Blitz", url=url)]
     ])
 
 
@@ -71,9 +71,9 @@ async def start_handler(message: Message):
         referrer_id = parts[1].strip()
 
     text = (
-        f"👋 Welcome{', ' + message.from_user.first_name if message.from_user.first_name else ''}!\n\n"
-        "💰 Earn real USDT by watching ads, completing tasks, and inviting friends.\n"
-        "Tap the button below to open the app."
+        f"⚡️ Welcome to *Star Blitz*, {message.from_user.first_name if message.from_user.first_name else 'User'}! 🌟\n\n"
+        "💰 Earn real USDT by watching ads, completing tasks, playing mini-games, and inviting friends.\n\n"
+        "👇 Tap the button below to launch the app and start earning!"
     )
     await message.answer(text, reply_markup=_webapp_keyboard(referrer_id))
 
