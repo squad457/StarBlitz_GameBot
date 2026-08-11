@@ -86,6 +86,10 @@ function switchTab(tab) {
 }
 
 async function loadTabData(tab) {
+  // Hide splash immediately so the dashboard opens instantly without waiting for backend cold-start
+  const splash = document.getElementById("splash");
+  if (splash) setTimeout(() => splash.classList.add("hide"), 300);
+
   try {
     if (tab === "home") {
       const [user, transactions] = await Promise.all([Api.syncUser(), Api.transactions()]);
@@ -109,16 +113,12 @@ async function loadTabData(tab) {
     } else if (tab === "invite") {
       state.referral = await Api.referralStats();
     }
-    document.getElementById("streak-count").textContent = state.user?.streak_count ?? 0;
+    const streakEl = document.getElementById("streak-count");
+    if (streakEl) streakEl.textContent = state.user?.streak_count ?? 0;
     if (state.user) {
-      // Awaited so the splash screen (below) never hides before the avatar
-      // is actually ready to show — that gap was what let the header's
-      // bare background be visible for a moment on open.
       await setAvatar(state.user);
     }
     renderActiveTab();
-    const splash = document.getElementById("splash");
-    if (splash) setTimeout(() => splash.classList.add("hide"), 400);
   } catch (err) {
     showToast(err.message, "error");
   }
@@ -296,9 +296,8 @@ document.addEventListener("click", async (e) => {
     tg?.setBackgroundColor?.("#0D0B1A");
   }
 
-  // Safety net: if something else stalls loadTabData (slow network, backend
-  // hiccup), never leave the splash frozen indefinitely.
-  setTimeout(() => document.getElementById("splash")?.classList.add("hide"), 6000);
+  // Safety net: hide splash quickly after 800ms
+  setTimeout(() => document.getElementById("splash")?.classList.add("hide"), 800);
 
   switchTab("home");
 })();
