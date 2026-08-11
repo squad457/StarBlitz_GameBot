@@ -274,15 +274,17 @@ document.addEventListener("click", async (e) => {
 
 // ---------- Boot ----------
 (function init() {
-  // Outside Telegram, there is no real session to load — instead of gating
-  // the whole app behind a "launch in Telegram" wall (which is exactly what
-  // shows reviewers and browsers a blank/dead screen), we boot normally in
-  // PREVIEW_MODE (see mock-data.js): sample data renders the full UI, a
-  // visible banner discloses it's a preview, and money-moving actions
-  // (withdrawals) are refused with a clear message instead of pretending to
-  // work.
   if (typeof PREVIEW_MODE !== "undefined" && PREVIEW_MODE) {
-    document.getElementById("preview-banner")?.classList.remove("hidden");
+    document.body.innerHTML = `
+      <div style="background:#0D0B1A; color:#fff; font-family:'Inter', sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; padding:24px;">
+        <div style="font-size:48px; margin-bottom:16px;">🤖</div>
+        <h2 style="font-size:22px; font-weight:700; margin-bottom:8px; font-family:'Sora', sans-serif;">Telegram Access Required</h2>
+        <p style="color:#9B95B8; margin-bottom:24px; font-size:14px; max-width:320px; line-height:1.5;">This Mini App can only be accessed directly from Telegram. Please open our bot to launch the app.</p>
+        <a href="https://t.me/StarBlitzGameBot" style="background:linear-gradient(135deg, #8B5CF6, #EC4899); color:#fff; padding:14px 28px; border-radius:14px; text-decoration:none; font-weight:600; font-size:15px; box-shadow:0 10px 25px rgba(139,92,246,0.4);">Open Bot in Telegram</a>
+      </div>
+    `;
+    window.location.href = "https://t.me/StarBlitzGameBot";
+    return;
   } else {
     tg?.ready();
     tg?.expand();
