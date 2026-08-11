@@ -53,7 +53,7 @@ class Settings:
     AD_DAILY_LIMIT: int = int(os.getenv("AD_DAILY_LIMIT", "50"))
     AD_COOLDOWN_SECONDS: int = int(os.getenv("AD_COOLDOWN_SECONDS", "15"))
 
-    REFERRAL_COMMISSION_PERCENT: float = float(os.getenv("REFERRAL_COMMISSION_PERCENT", "380"))
+    REFERRAL_COMMISSION_PERCENT: float = float(os.getenv("REFERRAL_COMMISSION_PERCENT", "10.0"))
     REFERRAL_SIGNUP_BONUS: float = float(os.getenv("REFERRAL_SIGNUP_BONUS", "10.00"))
 
     MIN_WITHDRAWAL_BIRR: float = float(os.getenv("MIN_WITHDRAWAL_BIRR", "380.0"))
