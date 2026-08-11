@@ -8,7 +8,7 @@
  * in that case every call below is answered locally instead of hitting the
  * real backend with an unauthenticatable request.
  */
-const API_BASE = "https://noal-production.up.railway.app";
+const API_BASE = "https://starblitzgamebot-production.up.railway.app";
 
 const tg = window.Telegram?.WebApp;
 const initData = tg?.initData || "";

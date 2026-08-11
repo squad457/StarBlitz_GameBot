@@ -2,7 +2,7 @@
  * Admin dashboard controller. Single file: API wrapper, view renderers, event wiring.
  * Auth: an admin key is stored in localStorage and sent as X-Admin-Key on every request.
  */
-const API_BASE = "https://noal-production.up.railway.app";
+const API_BASE = "https://starblitzgamebot-production.up.railway.app";
 
 let adminKey = localStorage.getItem("admin_key") || "";
 
