@@ -86,10 +86,6 @@ function switchTab(tab) {
 }
 
 async function loadTabData(tab) {
-  // Hide splash immediately so the dashboard opens instantly without waiting for backend cold-start
-  const splash = document.getElementById("splash");
-  if (splash) setTimeout(() => splash.classList.add("hide"), 300);
-
   try {
     if (tab === "home") {
       const [user, transactions] = await Promise.all([Api.syncUser(), Api.transactions()]);
@@ -119,8 +115,15 @@ async function loadTabData(tab) {
       await setAvatar(state.user);
     }
     renderActiveTab();
+
+    // Hide splash successfully once data is fully ready
+    const splash = document.getElementById("splash");
+    if (splash) splash.classList.add("hide");
   } catch (err) {
     showToast(err.message, "error");
+    // Also hide splash on error after a moment so user isn't stuck forever
+    const splash = document.getElementById("splash");
+    if (splash) setTimeout(() => splash.classList.add("hide"), 2000);
   }
 }
 

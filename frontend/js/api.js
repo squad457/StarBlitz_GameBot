@@ -13,28 +13,43 @@ const API_BASE = "https://starblitzgamebot-production.up.railway.app";
 const tg = window.Telegram?.WebApp;
 const initData = tg?.initData || "";
 
-async function apiRequest(path, opts = {}) {
+async function apiRequest(path, opts = {}, retries = 3, delay = 1200) {
   if (typeof PREVIEW_MODE !== "undefined" && PREVIEW_MODE) {
     return mockApiRequest(path, opts);
   }
   const { method = "GET", body } = opts;
-  const res = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Telegram-Init-Data": initData,
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
 
-  let data = null;
-  try { data = await res.json(); } catch (_) { /* no body */ }
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(`${API_BASE}${path}`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "X-Telegram-Init-Data": initData,
+        },
+        body: body ? JSON.stringify(body) : undefined,
+      });
 
-  if (!res.ok) {
-    const message = data?.detail || `Request failed (${res.status})`;
-    throw new Error(message);
+      let data = null;
+      try { data = await res.json(); } catch (_) { /* no body */ }
+
+      if (!res.ok) {
+        if (res.status >= 500 && attempt < retries) {
+          await new Promise(r => setTimeout(r, delay * attempt));
+          continue;
+        }
+        const message = data?.detail || `Request failed (${res.status})`;
+        throw new Error(message);
+      }
+      return data;
+    } catch (err) {
+      if (attempt < retries) {
+        await new Promise(r => setTimeout(r, delay * attempt));
+        continue;
+      }
+      throw new Error("Connecting to server... please wait a moment.");
+    }
   }
-  return data;
 }
 
 const Api = {
