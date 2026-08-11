@@ -277,12 +277,11 @@ document.addEventListener("click", async (e) => {
   if (typeof PREVIEW_MODE !== "undefined" && PREVIEW_MODE) {
     document.body.innerHTML = `
       <div style="background:#0D0B1A; color:#fff; font-family:'Inter', sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; padding:24px;">
-        <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(236,72,153,0.2)); display:flex; align-items:center; justify-content:center; margin-bottom:20px; border:1px solid rgba(139,92,246,0.3);">
-          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2 2 9.5l7.5 3.5L13 21.5 21.5 2z"/></svg>
+        <div style="width:76px; height:76px; border-radius:50%; background:linear-gradient(135deg, rgba(139,92,246,0.15), rgba(34,211,238,0.15)); display:flex; align-items:center; justify-content:center; margin-bottom:20px; border:1px solid rgba(139,92,246,0.3); box-shadow:0 0 25px rgba(139,92,246,0.15);">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="#8B5CF6"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.73-.53.36-1.01.54-1.44.53-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.06-.78 4.15-1.8 6.92-2.99 8.31-3.57 3.96-1.66 4.78-1.95 5.32-1.96.12 0 .39.03.56.17.14.12.18.28.2.45-.02.07-.02.13-.04.25z"/></svg>
         </div>
-        <h2 style="font-size:22px; font-weight:700; margin-bottom:10px; font-family:'Sora', sans-serif; letter-title:-0.5px;">Telegram Required</h2>
-        <p style="color:#9B95B8; margin-bottom:8px; font-size:14px; max-width:360px; line-height:1.6;">ይህ ሚኒ አፕ (Mini App) በቴሌግራም መተግበሪያ ውስጥ ብቻ የሚሰራ ነው። እባክዎ ከታች ያለውን አዝራር በመጫን ወደ ቦታችን በመሄድ አፑን ይክፈቱ።</p>
-        <p style="color:#6E6893; margin-bottom:28px; font-size:13px; max-width:360px; line-height:1.5;">This application is designed exclusively for Telegram. Please open our official bot to launch the app safely.</p>
+        <h2 style="font-size:22px; font-weight:700; margin-bottom:10px; font-family:'Sora', sans-serif;">Telegram Access Required</h2>
+        <p style="color:#9B95B8; margin-bottom:28px; font-size:14px; max-width:340px; line-height:1.6;">This Mini App is designed exclusively for Telegram. Please open our official bot to launch the application safely.</p>
         <a href="https://t.me/StarBlitzGameBot" style="background:linear-gradient(135deg, #8B5CF6, #EC4899); color:#fff; padding:14px 32px; border-radius:14px; text-decoration:none; font-weight:600; font-size:15px; box-shadow:0 10px 25px rgba(139,92,246,0.4); display:inline-flex; align-items:center; gap:8px;">
           <span>Open Bot in Telegram</span>
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
